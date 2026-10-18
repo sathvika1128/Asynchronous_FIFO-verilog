@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#070B14"/>
+      <stop offset="100%" stop-color="#0D1527"/>
+    </linearGradient>
+
+    <!-- Write Domain Gradient -->
+    <linearGradient id="wDomainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A1832" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#0F284D" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Read Domain Gradient -->
+    <linearGradient id="rDomainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#200B3B" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#32145A" stop-opacity="0.8"/>
+    </linearGradient>
+
+    <!-- Module Card Gradient -->
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141F36"/>
+      <stop offset="100%" stop-color="#0E1729"/>
+    </linearGradient>
+
+    <!-- DPRAM Card Gradient -->
+    <linearGradient id="ramGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0E2347"/>
+      <stop offset="50%" stop-color="#1E1E3F"/>
+      <stop offset="100%" stop-color="#2D114D"/>
+    </linearGradient>
+
+    <!-- Synchronizer Card Gradient -->
+    <linearGradient id="syncW2RGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#112545"/>
+      <stop offset="100%" stop-color="#241B4D"/>
+    </linearGradient>
+
+    <linearGradient id="syncR2WGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#26174D"/>
+      <stop offset="100%" stop-color="#122547"/>
+    </linearGradient>
+
+    <!-- Glow & Shadow Filters -->
+    <filter id="cardShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <filter id="cyanGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#38BDF8" flood-opacity="0.6"/>
+    </filter>
+
+    <filter id="purpleGlow">
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#C084FC" flood-opacity="0.6"/>
+    </filter>
+
+    <!-- Markers -->
+    <marker id="arrowCyan" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 8 4, 0 7" fill="#38BDF8"/>
+    </marker>
+
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 8 4, 0 7" fill="#C084FC"/>
+    </marker>
+
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 8 4, 0 7" fill="#34D399"/>
+    </marker>
+
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <polygon points="0 1, 8 4, 0 7" fill="#FBBF24"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 22px; font-weight: 700; fill: #F8FAFC; letter-spacing: 0.5px; }
+    .subtitle { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 13px; font-weight: 500; fill: #94A3B8; }
+    .domain-title-w { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #38BDF8; letter-spacing: 0.5px; }
+    .domain-title-r { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 15px; font-weight: 700; fill: #C084FC; letter-spacing: 0.5px; }
+    .card-title { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 14px; font-weight: 700; fill: #F1F5F9; }
+    .card-subtitle { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 11px; font-weight: 400; fill: #94A3B8; }
+    .submodule-text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 11px; font-weight: 600; fill: #CBD5E1; }
+    .pin-text { font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', monospace; font-size: 11px; font-weight: 600; fill: #E2E8F0; }
+    .bus-text { font-family: 'SFMono-Regular', Consolas, 'Roboto Mono', monospace; font-size: 10px; font-weight: 600; fill: #64748B; }
+    .cdc-text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 11px; font-weight: 700; fill: #F59E0B; letter-spacing: 1px; }
+    .note-text { font-family: 'Segoe UI', Inter, -apple-system, sans-serif; font-size: 11px; fill: #64748B; font-style: italic; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="680" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Top Title Bar -->
+  <g transform="translate(40, 36)">
+    <text class="title" x="0" y="0">DUAL-CLOCK ASYNCHRONOUS FIFO ARCHITECTURE (CDC)</text>
+    <text class="subtitle" x="0" y="20">Synthesizable Multi-Clock Microarchitecture based on Clifford Cummings Methodology</text>
+  </g>
+
+  <!-- ==================== DOMAIN REGIONS ==================== -->
+  <!-- Write Domain (wclk) Region -->
+  <rect x="40" y="75" width="410" height="565" rx="10" fill="url(#wDomainGrad)" stroke="#1E3A8A" stroke-width="1.5"/>
+  <rect x="40" y="75" width="410" height="34" rx="10" fill="#0C2042"/>
+  <text class="domain-title-w" x="60" y="98">WRITE CLOCK DOMAIN (wclk · 100 MHz)</text>
+
+  <!-- Read Domain (rclk) Region -->
+  <rect x="750" y="75" width="410" height="565" rx="10" fill="url(#rDomainGrad)" stroke="#581C87" stroke-width="1.5"/>
+  <rect x="750" y="75" width="410" height="34" rx="10" fill="#240D42"/>
+  <text class="domain-title-r" x="770" y="98">READ CLOCK DOMAIN (rclk · 40 MHz)</text>
+
+  <!-- Clock Domain Boundary Center Marker -->
+  <line x1="600" y1="120" x2="600" y2="630" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <rect x="530" y="80" width="140" height="24" rx="4" fill="#181308" stroke="#F59E0B" stroke-width="1"/>
+  <text class="cdc-text" x="538" y="96">CDC BOUNDARY</text>
+
+  <!-- ==================== TOP STORAGE: DUAL-PORT RAM ==================== -->
+  <!-- fifo_mem.v -->
+  <g transform="translate(380, 125)">
+    <rect width="440" height="150" rx="8" fill="url(#ramGrad)" stroke="#38BDF8" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect width="440" height="28" rx="8" fill="#0F172A" opacity="0.6"/>
+    <text class="card-title" x="145" y="19">fifo_mem.v (Dual-Port RAM)</text>
+    <text class="card-subtitle" x="125" y="44">16 words x 8-bit · DPRAM Array Core</text>
+
+    <!-- RAM Inside Graphic Cells -->
+    <g transform="translate(145, 60)">
+      <rect x="0" y="0" width="150" height="65" rx="4" fill="#080F1E" stroke="#334155" stroke-width="1"/>
+      <line x1="37" y1="0" x2="37" y2="65" stroke="#1E293B"/>
+      <line x1="75" y1="0" x2="75" y2="65" stroke="#1E293B"/>
+      <line x1="112" y1="0" x2="112" y2="65" stroke="#1E293B"/>
+      <line x1="0" y1="21" x2="150" y2="21" stroke="#1E293B"/>
+      <line x1="0" y1="43" x2="150" y2="43" stroke="#1E293B"/>
+      <text x="75" y="36" fill="#64748B" font-size="10" font-family="sans-serif" text-anchor="middle">mem[15:0]</text>
+      <text x="75" y="56" fill="#38BDF8" font-size="9" font-family="sans-serif" text-anchor="middle">Sync Write / FWFT Read</text>
+    </g>
+
+    <!-- Left Pins (Write Port) -->
+    <text class="pin-text" x="12" y="70">wclk</text>
+    <text class="pin-text" x="12" y="92">wclken (winc &amp; !wfull)</text>
+    <text class="pin-text" x="12" y="114">waddr[3:0]</text>
+    <text class="pin-text" x="12" y="136">wdata[7:0]</text>
+
+    <!-- Right Pins (Read Port) -->
+    <text class="pin-text" x="385" y="70" text-anchor="end">raddr[3:0]</text>
+    <text class="pin-text" x="385" y="114" text-anchor="end">rdata[7:0] (FWFT)</text>
+  </g>
+
+  <!-- ==================== LEFT MODULE: wptr_full.v ==================== -->
+  <g transform="translate(60, 310)">
+    <rect width="365" height="310" rx="8" fill="url(#cardGrad)" stroke="#0284C7" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect width="365" height="30" rx="8" fill="#0C1E3D"/>
+    <text class="card-title" x="15" y="20">wptr_full.v (Write Pointer &amp; Full Logic)</text>
+    <text class="card-subtitle" x="15" y="44">Clocked by wclk · Full-flag generation &amp; binary/Gray counters</text>
+
+    <!-- Sub-blocks inside wptr_full -->
+    <!-- 1. Binary Counter -->
+    <rect x="20" y="60" width="325" height="55" rx="5" fill="#0B132B" stroke="#1E3A8A" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="82">Binary Counter: wbin[4:0]</text>
+    <text class="note-text" x="35" y="100">wbin_next = wbin + (winc &amp; ~wfull)</text>
+
+    <!-- 2. Binary-to-Gray Converter -->
+    <rect x="20" y="125" width="325" height="55" rx="5" fill="#0B132B" stroke="#0284C7" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="147">Binary-to-Gray: wptr[4:0]</text>
+    <text class="note-text" x="35" y="165">wgray_next = (wbin_next &gt;&gt; 1) ^ wbin_next</text>
+
+    <!-- 3. Full Flag Comparator -->
+    <rect x="20" y="190" width="325" height="70" rx="5" fill="#0B132B" stroke="#0369A1" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="212">Clifford Cummings Full Detector: wfull</text>
+    <text class="note-text" x="35" y="230">wfull_val = (wgray_next == {~wq2_rptr[4:3], wq2_rptr[2:0]})</text>
+    <text x="35" y="248" fill="#F59E0B" font-size="10" font-family="sans-serif">★ MSB &amp; 2nd MSB Inverted, remaining LSBs identical</text>
+
+    <!-- Pin labels -->
+    <text class="pin-text" x="25" y="290">Input: wq2_rptr[4:0]</text>
+    <text class="pin-text" x="240" y="290">Output: wfull</text>
+  </g>
+
+  <!-- ==================== RIGHT MODULE: rptr_empty.v ==================== -->
+  <g transform="translate(775, 310)">
+    <rect width="365" height="310" rx="8" fill="url(#cardGrad)" stroke="#7C3AED" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect width="365" height="30" rx="8" fill="#2A114B"/>
+    <text class="card-title" x="15" y="20">rptr_empty.v (Read Pointer &amp; Empty Logic)</text>
+    <text class="card-subtitle" x="15" y="44">Clocked by rclk · Empty-flag generation &amp; binary/Gray counters</text>
+
+    <!-- Sub-blocks inside rptr_empty -->
+    <!-- 1. Binary Counter -->
+    <rect x="20" y="60" width="325" height="55" rx="5" fill="#1A0D33" stroke="#4C1D95" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="82">Binary Counter: rbin[4:0]</text>
+    <text class="note-text" x="35" y="100">rbin_next = rbin + (rinc &amp; ~rempty)</text>
+
+    <!-- 2. Binary-to-Gray Converter -->
+    <rect x="20" y="125" width="325" height="55" rx="5" fill="#1A0D33" stroke="#6D28D9" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="147">Binary-to-Gray: rptr[4:0]</text>
+    <text class="note-text" x="35" y="165">rgray_next = (rbin_next &gt;&gt; 1) ^ rbin_next</text>
+
+    <!-- 3. Empty Flag Comparator -->
+    <rect x="20" y="190" width="325" height="70" rx="5" fill="#1A0D33" stroke="#5B21B6" stroke-width="1"/>
+    <text class="submodule-text" x="35" y="212">Conservative Empty Detector: rempty</text>
+    <text class="note-text" x="35" y="230">rempty_val = (rgray_next == rq2_wptr)</text>
+    <text x="35" y="248" fill="#C084FC" font-size="10" font-family="sans-serif">★ Safe equality comparison of Gray pointers</text>
+
+    <!-- Pin labels -->
+    <text class="pin-text" x="25" y="290">Input: rq2_wptr[4:0]</text>
+    <text class="pin-text" x="235" y="290">Output: rempty</text>
+  </g>
+
+  <!-- ==================== CENTER SYNCHRONIZERS (sync_ptr.v) ==================== -->
+  <!-- 1. sync_w2r (Write to Read Synchronizer, clocked by rclk) -->
+  <g transform="translate(460, 335)">
+    <rect width="280" height="110" rx="6" fill="url(#syncW2RGrad)" stroke="#10B981" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect width="280" height="24" rx="6" fill="#064E3B"/>
+    <text class="card-title" x="12" y="17" fill="#A7F3D0" font-size="12">u_sync_w2r: sync_ptr.v (wclk → rclk)</text>
+    <text class="card-subtitle" x="12" y="38" fill="#6EE7B7">Clocked by rclk · 2-Stage D-FF Synchronizer</text>
+
+    <!-- Two Flop Boxes -->
+    <rect x="35" y="48" width="85" height="48" rx="4" fill="#062F24" stroke="#059669" stroke-width="1"/>
+    <text x="77" y="68" fill="#34D399" font-family="monospace" font-size="10" text-anchor="middle">Stage 1</text>
+    <text x="77" y="84" fill="#6EE7B7" font-family="sans-serif" font-size="9" text-anchor="middle">sync_stage1</text>
+
+    <line x1="120" y1="72" x2="160" y2="72" stroke="#34D399" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+    <rect x="160" y="48" width="85" height="48" rx="4" fill="#062F24" stroke="#059669" stroke-width="1"/>
+    <text x="202" y="68" fill="#34D399" font-family="monospace" font-size="10" text-anchor="middle">Stage 2</text>
+    <text x="202" y="84" fill="#6EE7B7" font-family="sans-serif" font-size="9" text-anchor="middle">sync_stage2</text>
+
+    <text x="140" y="103" fill="#FBBF24" font-family="sans-serif" font-size="8.5" text-anchor="middle">(* ASYNC_REG = "TRUE" *)</text>
+  </g>
+
+  <!-- 2. sync_r2w (Read to Write Synchronizer, clocked by wclk) -->
+  <g transform="translate(460, 480)">
+    <rect width="280" height="110" rx="6" fill="url(#syncR2WGrad)" stroke="#F59E0B" stroke-width="1.5" filter="url(#cardShadow)"/>
+    <rect width="280" height="24" rx="6" fill="#78350F"/>
+    <text class="card-title" x="12" y="17" fill="#FDE68A" font-size="12">u_sync_r2w: sync_ptr.v (rclk → wclk)</text>
+    <text class="card-subtitle" x="12" y="38" fill="#FCD34D">Clocked by wclk · 2-Stage D-FF Synchronizer</text>
+
+    <!-- Two Flop Boxes -->
+    <rect x="160" y="48" width="85" height="48" rx="4" fill="#3D1A06" stroke="#D97706" stroke-width="1"/>
+    <text x="202" y="68" fill="#FBBF24" font-family="monospace" font-size="10" text-anchor="middle">Stage 1</text>
+    <text x="202" y="84" fill="#FDE68A" font-family="sans-serif" font-size="9" text-anchor="middle">sync_stage1</text>
+
+    <line x1="160" y1="72" x2="120" y2="72" stroke="#FBBF24" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
+
+    <rect x="35" y="48" width="85" height="48" rx="4" fill="#3D1A06" stroke="#D97706" stroke-width="1"/>
+    <text x="77" y="68" fill="#FBBF24" font-family="monospace" font-size="10" text-anchor="middle">Stage 2</text>
+    <text x="77" y="84" fill="#FDE68A" font-family="sans-serif" font-size="9" text-anchor="middle">sync_stage2</text>
+
+    <text x="140" y="103" fill="#FBBF24" font-family="sans-serif" font-size="8.5" text-anchor="middle">(* ASYNC_REG = "TRUE" *)</text>
+  </g>
+
+  <!-- ==================== SIGNAL WIRES & ROUTING ==================== -->
+  <!-- Top Primary Inputs/Outputs -->
+  <!-- wdata in -->
+  <line x1="20" y1="261" x2="380" y2="261" stroke="#38BDF8" stroke-width="2" marker-end="url(#arrowCyan)"/>
+  <text class="pin-text" x="15" y="253">wdata[7:0]</text>
+
+  <!-- winc in -->
+  <line x1="20" y1="380" x2="60" y2="380" stroke="#38BDF8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+  <text class="pin-text" x="15" y="373">winc</text>
+
+  <!-- wfull out -->
+  <line x1="60" y1="600" x2="20" y2="600" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+  <text class="pin-text" x="15" y="593" fill="#F87171">wfull</text>
+
+  <!-- rdata out -->
+  <line x1="820" y1="239" x2="1180" y2="239" stroke="#C084FC" stroke-width="2" marker-end="url(#arrowPurple)"/>
+  <text class="pin-text" x="1175" y="231" text-anchor="end">rdata[7:0]</text>
+
+  <!-- rinc in -->
+  <line x1="1180" y1="380" x2="1140" y2="380" stroke="#C084FC" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+  <text class="pin-text" x="1175" y="373" text-anchor="end">rinc</text>
+
+  <!-- rempty out -->
+  <line x1="1140" y1="600" x2="1180" y2="600" stroke="#FBBF24" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+  <text class="pin-text" x="1175" y="593" text-anchor="end" fill="#FCD34D">rempty</text>
+
+  <!-- waddr[3:0] from wptr_full up to DPRAM -->
+  <path d="M 180 310 L 180 239 L 380 239" fill="none" stroke="#38BDF8" stroke-width="1.5" marker-end="url(#arrowCyan)"/>
+  <text class="bus-text" x="185" y="232">waddr[3:0]</text>
+
+  <!-- raddr[3:0] from rptr_empty up to DPRAM -->
+  <path d="M 1020 310 L 1020 195 L 820 195" fill="none" stroke="#C084FC" stroke-width="1.5" marker-end="url(#arrowPurple)"/>
+  <text class="bus-text" x="955" y="188">raddr[3:0]</text>
+
+  <!-- wptr[4:0] from wptr_full into sync_w2r -->
+  <path d="M 425 450 L 460 450" fill="none" stroke="#34D399" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text class="bus-text" x="428" y="442">wptr[4:0]</text>
+
+  <!-- rq2_wptr[4:0] from sync_w2r into rptr_empty -->
+  <path d="M 740 390 L 775 390" fill="none" stroke="#34D399" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text class="bus-text" x="742" y="382">rq2_wptr[4:0]</text>
+
+  <!-- rptr[4:0] from rptr_empty into sync_r2w -->
+  <path d="M 775 535 L 740 535" fill="none" stroke="#FBBF24" stroke-width="2" marker-end="url(#arrowAmber)"/>
+  <text class="bus-text" x="743" y="527">rptr[4:0]</text>
+
+  <!-- wq2_rptr[4:0] from sync_r2w into wptr_full -->
+  <path d="M 460 550 L 425 550" fill="none" stroke="#FBBF24" stroke-width="2" marker-end="url(#arrowAmber)"/>
+  <text class="bus-text" x="428" y="542">wq2_rptr[4:0]</text>
+
+</svg>
