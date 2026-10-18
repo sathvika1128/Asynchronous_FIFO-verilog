@@ -1,9 +1,6 @@
 # Parameterized Dual-Clock Asynchronous FIFO with CDC Verification
 
-[![Language](https://img.shields.io/badge/Language-Verilog_HDL-blue.svg)](#)
-[![Simulator](https://img.shields.io/badge/Simulator-Xilinx_Vivado_XSim-orange.svg)](#)
-[![Verification](https://img.shields.io/badge/Verification-10%2F10_Tests_Passed-brightgreen.svg)](#)
-[![Architecture](https://img.shields.io/badge/Architecture-Clifford_Cummings_CDC-purple.svg)](#)
+
 
 A synthesizable, parameterized dual-clock **Asynchronous FIFO (First-In, First-Out)** buffer implemented in Verilog HDL. Designed to reliably transfer streaming data across independent, unsynchronized write (`wclk`) and read (`rclk`) clock domains without data loss, multi-bit synchronization hazards, or race conditions.
 
@@ -13,67 +10,6 @@ A synthesizable, parameterized dual-clock **Asynchronous FIFO (First-In, First-O
 
 The core architecture follows the industry-standard Clifford Cummings Clock Domain Crossing (CDC) design methodology:
 
-```mermaid
-flowchart TB
-    subgraph WDOMAIN ["Write Clock Domain (wclk)"]
-        WDATA["wdata[7:0] (Input Data)"]
-        WINC["winc (Write Enable)"]
-        WFULL["wfull (FIFO Full)"]
-        
-        subgraph WPTR_BLOCK ["Write Pointer & Full Logic (wptr_full.v)"]
-            WBIN["Binary Counter (wbin[4:0])"]
-            WGRAY["Bin-to-Gray (wptr[4:0])"]
-            FULL_GEN["Full Comparator<br/>MSB & 2nd MSB Inverted"]
-        end
-    end
-
-    subgraph MEM ["Storage Core (fifo_mem.v)"]
-        DPRAM["Dual-Port RAM (16 x 8-bit)<br/>Synchronous Write / FWFT Read"]
-    end
-
-    subgraph CDC_BOUNDARY ["Clock Domain Crossing (CDC) Boundary"]
-        subgraph SYNC_W2R ["sync_w2r (2-Stage D-FF)"]
-            WFF1["D-FF 1"] -->|rclk| WFF2["D-FF 2 (rq2_wptr)"]
-        end
-        subgraph SYNC_R2W ["sync_r2w (2-Stage D-FF)"]
-            RFF1["D-FF 1"] -->|wclk| RFF2["D-FF 2 (wq2_rptr)"]
-        end
-    end
-
-    subgraph RDOMAIN ["Read Clock Domain (rclk)"]
-        RDATA["rdata[7:0] (Output Data)"]
-        RINC["rinc (Read Enable)"]
-        REMPTY["rempty (FIFO Empty)"]
-        
-        subgraph RPTR_BLOCK ["Read Pointer & Empty Logic (rptr_empty.v)"]
-            RBIN["Binary Counter (rbin[4:0])"]
-            RGRAY["Bin-to-Gray (rptr[4:0])"]
-            EMPTY_GEN["Empty Comparator<br/>rgray_next == rq2_wptr"]
-        end
-    end
-
-    %% Write Connections
-    WDATA --> DPRAM
-    WINC --> WBIN
-    WBIN -->|waddr[3:0]| DPRAM
-    WBIN --> WGRAY
-    WGRAY -->|wptr[4:0]| WFF1
-    WGRAY --> FULL_GEN
-    FULL_GEN --> WFULL
-
-    %% Read Connections
-    DPRAM -->|rdata[7:0]| RDATA
-    RINC --> RBIN
-    RBIN -->|raddr[3:0]| DPRAM
-    RBIN --> RGRAY
-    RGRAY -->|rptr[4:0]| RFF1
-    RGRAY --> EMPTY_GEN
-    EMPTY_GEN --> REMPTY
-
-    %% Cross-Domain Pointers
-    WFF2 -->|rq2_wptr[4:0]| EMPTY_GEN
-    RFF2 -->|wq2_rptr[4:0]| FULL_GEN
-```
 
 <p align="center">
   <img src="docs/architecture.svg" alt="Asynchronous FIFO Architecture Diagram" width="100%">
@@ -95,11 +31,20 @@ Gray pointers are synchronized into the opposing domain using a 2-stage Flip-Flo
 * Both registers include the Xilinx attribute `(* ASYNC_REG = "TRUE" *)` to force the physical placer to co-locate both flip-flops inside the **same slice**, minimizing net delay and setup/hold violations.
 
 ### C. Clifford Cummings Full-Detection Logic
-Using an $(N+1)$-bit pointer for a FIFO of depth $2^N$:
-* **Empty Flag:** The synchronized write pointer equals the read pointer:
-  $$\text{rempty} = (\text{rgray\_next} == \text{rq2\_wptr})$$
-* **Full Flag:** In Gray code, due to symmetry reflection, full occurs when the **MSB and 2nd MSB are inverted**, and all lower LSBs are identical:
-  $$\text{wfull} = (\text{wgray\_next} == \{\sim\text{wq2\_rptr}[N:N-1], \text{wq2\_rptr}[N-2:0]\})$$
+Using an $(N+1)$-bit pointer for a FIFO of depth $2^N$ (where the address bus is $N$ bits wide):
+
+* **Empty Flag Generation (`rptr_empty.v`):**  
+  Asserted when the next Gray read pointer equals the synchronized Gray write pointer:
+  ```verilog
+  assign rempty_val = (rgray_next == rq2_wptr);
+  ```
+
+* **Full Flag Generation (`wptr_full.v`):**  
+  In Gray code, due to symmetry reflection, full occurs when the **MSB and 2nd MSB are inverted**, and all lower $(N-1)$ LSBs are identical:
+  ```verilog
+  assign wfull_val = (wgray_next == {~wq2_rptr[ADDR_WIDTH:ADDR_WIDTH-1], 
+                                     wq2_rptr[ADDR_WIDTH-2:0]});
+  ```
 
 ### D. Conservative (Pessimistic) Flag Generation
 * **Empty Flag** is generated in the `rclk` domain using delayed write pointer information. The FIFO may report empty for 2 cycles after data was written, but will **never falsely report non-empty**.
